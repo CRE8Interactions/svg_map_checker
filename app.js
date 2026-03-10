@@ -2,7 +2,7 @@
   // Browser-only app: document/window don't exist in Node.js
   if (typeof document === "undefined" || typeof window === "undefined") {
     console.error(
-      "This app runs in the browser. Open index.html in a browser, or run:\n  npx serve .\n  and visit http://localhost:3000"
+      "This app runs in the browser. Open index.html in a browser, or run:\n  npx serve .\n  and visit http://localhost:3000",
     );
     return;
   }
@@ -1192,7 +1192,7 @@
     const routeProjects = [
       {
         slug: "/aggie-memorial-stadium",
-        projectFile: "Aggie Memorial Stadium.svgqc",
+        projectFile: "aggie-stadium.svgqc",
       },
     ];
     const routePath =
