@@ -1,4 +1,12 @@
 (function () {
+  // Browser-only app: document/window don't exist in Node.js
+  if (typeof document === "undefined" || typeof window === "undefined") {
+    console.error(
+      "This app runs in the browser. Open index.html in a browser, or run:\n  npx serve .\n  and visit http://localhost:3000"
+    );
+    return;
+  }
+
   const ZOOM_THRESHOLD = 100; // identifiers unlock, seats exposed when zoom > 100%
   const MIN_ZOOM = 1; // 100% minimum (fit to screen)
   const MAX_ZOOM = 16; // 300% with exponent 2 = 2^4 = 16x scale
@@ -1123,12 +1131,7 @@
     popover.classList.add("hidden");
   }
 
-  // If URL has ?project=path/to/file.svgqc, fetch and load it so the client sees the final product without uploading
-  const projectParam = new URLSearchParams(window.location.search).get(
-    "project",
-  );
-  if (projectParam) {
-    const projectUrl = new URL(projectParam, window.location.href).href;
+  function loadProjectFromUrl(projectUrl) {
     fetch(projectUrl)
       .then((r) => {
         if (!r.ok) throw new Error();
@@ -1147,5 +1150,25 @@
         }
       })
       .catch(() => {});
+  }
+
+  // If URL has ?project=path/to/file.svgqc, fetch and load it so the client sees the final product without uploading
+  const projectParam = new URLSearchParams(window.location.search).get(
+    "project",
+  );
+  if (projectParam) {
+    const projectUrl = new URL(projectParam, window.location.href).href;
+    loadProjectFromUrl(projectUrl);
+  } else {
+    // Route-based project loading for shareable short URLs
+    const routeProjects = {
+      "/aggie-memorial-stadium": "Aggie Memorial Stadium.svgqc",
+    };
+    const routePath = window.location.pathname.replace(/\/+$/, "") || "/";
+    const projectFile = routeProjects[routePath];
+    if (projectFile) {
+      const projectUrl = new URL(projectFile, window.location.href).href;
+      loadProjectFromUrl(projectUrl);
+    }
   }
 })();
