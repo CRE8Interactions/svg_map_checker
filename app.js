@@ -1131,11 +1131,19 @@
     popover.classList.add("hidden");
   }
 
-  function loadProjectFromUrl(projectUrl) {
-    fetch(projectUrl)
-      .then((r) => {
-        if (!r.ok) throw new Error();
+  function loadProjectFromUrlCandidates(projectUrls) {
+    const candidates = Array.isArray(projectUrls) ? projectUrls : [projectUrls];
+    const tryFetch = (index) => {
+      if (index >= candidates.length) return Promise.reject(new Error("Not found"));
+      return fetch(candidates[index]).then((r) => {
+        if (!r.ok) throw new Error("HTTP " + r.status);
         return r.json();
+      }).catch(() => tryFetch(index + 1));
+    };
+
+    tryFetch(0)
+      .then((r) => {
+        return r;
       })
       .then((project) => {
         if (
@@ -1149,7 +1157,9 @@
           mapScreen.classList.remove("hidden");
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        // Keep upload screen visible when no route project could be loaded.
+      });
   }
 
   // If URL has ?project=path/to/file.svgqc, fetch and load it so the client sees the final product without uploading
@@ -1157,8 +1167,11 @@
     "project",
   );
   if (projectParam) {
-    const projectUrl = new URL(projectParam, window.location.href).href;
-    loadProjectFromUrl(projectUrl);
+    const projectUrls = [
+      new URL(projectParam, window.location.href).href,
+      new URL(projectParam, window.location.origin + "/").href,
+    ];
+    loadProjectFromUrlCandidates(projectUrls);
   } else {
     // Route-based project loading for shareable short URLs
     const routeProjects = [
@@ -1173,9 +1186,15 @@
     const matchedRoute = routeProjects.find((r) => routePath.endsWith(r.slug));
     const projectFile = matchedRoute?.projectFile;
     if (projectFile) {
-      // Resolve from site root so route depth/prefixes do not break fetch paths.
-      const projectUrl = new URL(projectFile, window.location.origin + "/").href;
-      loadProjectFromUrl(projectUrl);
+      const projectUrls = [
+        // Site root (works when app is deployed at domain root)
+        new URL(projectFile, window.location.origin + "/").href,
+        // Current URL path (works with some static host path layouts)
+        new URL(projectFile, window.location.href).href,
+        // Parent path (works when app is under one-level prefix)
+        new URL(projectFile, window.location.origin + routePath + "/../").href,
+      ];
+      loadProjectFromUrlCandidates(projectUrls);
     }
   }
 })();
