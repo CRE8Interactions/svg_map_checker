@@ -1161,13 +1161,20 @@
     loadProjectFromUrl(projectUrl);
   } else {
     // Route-based project loading for shareable short URLs
-    const routeProjects = {
-      "/aggie-memorial-stadium": "Aggie Memorial Stadium.svgqc",
-    };
-    const routePath = window.location.pathname.replace(/\/+$/, "") || "/";
-    const projectFile = routeProjects[routePath];
+    const routeProjects = [
+      {
+        slug: "/aggie-memorial-stadium",
+        projectFile: "Aggie Memorial Stadium.svgqc",
+      },
+    ];
+    const routePath =
+      (window.location.pathname || "/").replace(/\/+$/, "").toLowerCase() ||
+      "/";
+    const matchedRoute = routeProjects.find((r) => routePath.endsWith(r.slug));
+    const projectFile = matchedRoute?.projectFile;
     if (projectFile) {
-      const projectUrl = new URL(projectFile, window.location.href).href;
+      // Resolve from site root so route depth/prefixes do not break fetch paths.
+      const projectUrl = new URL(projectFile, window.location.origin + "/").href;
       loadProjectFromUrl(projectUrl);
     }
   }
