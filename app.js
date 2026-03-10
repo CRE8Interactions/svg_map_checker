@@ -1131,14 +1131,25 @@
     popover.classList.add("hidden");
   }
 
+  function showRouteLoadError(message) {
+    console.error(message);
+    const uploadText = uploadScreen?.querySelector(".upload-area p");
+    if (uploadText) {
+      uploadText.textContent = message;
+    }
+  }
+
   function loadProjectFromUrlCandidates(projectUrls) {
     const candidates = Array.isArray(projectUrls) ? projectUrls : [projectUrls];
     const tryFetch = (index) => {
-      if (index >= candidates.length) return Promise.reject(new Error("Not found"));
-      return fetch(candidates[index]).then((r) => {
-        if (!r.ok) throw new Error("HTTP " + r.status);
-        return r.json();
-      }).catch(() => tryFetch(index + 1));
+      if (index >= candidates.length)
+        return Promise.reject(new Error("Project file not found"));
+      return fetch(candidates[index])
+        .then((r) => {
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          return r.json();
+        })
+        .catch(() => tryFetch(index + 1));
     };
 
     tryFetch(0)
@@ -1158,7 +1169,11 @@
         }
       })
       .catch(() => {
-        // Keep upload screen visible when no route project could be loaded.
+        // Keep upload screen visible and report route-load issue.
+        showRouteLoadError(
+          "Could not auto-load project file for this route. Tried: " +
+            candidates.join(", "),
+        );
       });
   }
 
@@ -1186,12 +1201,16 @@
     const matchedRoute = routeProjects.find((r) => routePath.endsWith(r.slug));
     const projectFile = matchedRoute?.projectFile;
     if (projectFile) {
+      const encodedProjectFile = encodeURIComponent(projectFile).replace(
+        /%2F/g,
+        "/",
+      );
       const projectUrls = [
-        // Site root (works when app is deployed at domain root)
-        new URL(projectFile, window.location.origin + "/").href,
-        // Current URL path (works with some static host path layouts)
+        // Strongest candidates first
+        window.location.origin + "/" + encodedProjectFile,
+        window.location.origin + "/./" + encodedProjectFile,
+        // Fallbacks for prefixed/static hosting layouts
         new URL(projectFile, window.location.href).href,
-        // Parent path (works when app is under one-level prefix)
         new URL(projectFile, window.location.origin + routePath + "/../").href,
       ];
       loadProjectFromUrlCandidates(projectUrls);
