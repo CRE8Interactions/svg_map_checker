@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="SVG Map Quality Checker" />
+    <title>SVG Map Quality Checker</title>
+    <link rel="stylesheet" href="%PUBLIC_URL%/styles.css" />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <div class="app">
+      <div id="uploadScreen" class="screen">
+        <div class="upload-area">
+          <h1>SVG Map Quality Checker</h1>
+          <p>
+            Upload a seat map SVG to quality check sections, rows, and seats.
+          </p>
+          <label class="upload-btn">
+            <input
+              type="file"
+              id="fileInput"
+              accept=".svg,.svgqc,.json"
+              hidden
+            />
+            Choose SVG or project file
+          </label>
+        </div>
+      </div>
+
+      <div id="mapScreen" class="screen hidden">
+        <div class="toolbar">
+          <button
+            class="tool-btn active"
+            data-mode="seat"
+            title="Seat (individual)"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M4.037 4.688a.495.495 0 0 1 .651-.651l16 6.5a.5.5 0 0 1-.063.947l-6.124 1.58a2 2 0 0 0-1.438 1.435l-1.579 6.126a.5.5 0 0 1-.947.063z"
+              />
+            </svg>
+          </button>
+          <button class="tool-btn" data-mode="row" title="Row (highlight row)">
+            <svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="1" />
+              <circle cx="19" cy="12" r="1" />
+              <circle cx="5" cy="12" r="1" />
+            </svg>
+          </button>
+          <button
+            class="tool-btn"
+            data-mode="section"
+            title="Section (highlight whole section)"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="5" r="1" />
+              <circle cx="19" cy="5" r="1" />
+              <circle cx="5" cy="5" r="1" />
+              <circle cx="12" cy="12" r="1" />
+              <circle cx="19" cy="12" r="1" />
+              <circle cx="5" cy="12" r="1" />
+              <circle cx="12" cy="19" r="1" />
+              <circle cx="19" cy="19" r="1" />
+              <circle cx="5" cy="19" r="1" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="map-wrap">
+          <div class="zoom-controls">
+            <button id="zoomOut" aria-label="Zoom out">-</button>
+            <span id="zoomDisplay">100%</span>
+            <button id="zoomIn" aria-label="Zoom in">+</button>
+          </div>
+          <div class="map-container" id="mapContainer">
+            <div class="svg-transform-wrap" id="svgTransformWrap">
+              <div class="svg-wrapper" id="svgWrapper"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Map breakdown</h2>
+          <div class="total-row">
+            <span>Total seats</span>
+            <strong id="totalSeats">0</strong>
+          </div>
+          <div class="sections-list" id="sectionsList"></div>
+          <button
+            type="button"
+            id="exportProjectBtn"
+            class="export-btn"
+            title="Export map + capacities to share"
+          >
+            Export / Share
+          </button>
+        </div>
+      </div>
+
+      <div id="nzModal" class="modal hidden">
+        <div class="modal-backdrop"></div>
+        <div class="modal-dialog">
+          <h2>Add capacities for GA sections</h2>
+          <form id="nzForm" class="modal-form">
+            <div id="nzInputs"></div>
+            <div class="modal-actions">
+              <button type="submit" class="modal-btn primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div id="popover" class="popover hidden">
+        <div class="popover-inner">
+          <div class="popover-main">
+            <div class="popover-row">
+              <span class="popover-label">SEC</span
+              ><span class="popover-value" id="popSec">-</span>
+            </div>
+            <div class="popover-row" id="popRowWrap">
+              <span class="popover-label" id="popRowLabel">ROW</span
+              ><span class="popover-value" id="popRow">-</span>
+            </div>
+            <div class="popover-row">
+              <span class="popover-label" id="popLastLabel">SEAT</span
+              ><span class="popover-value" id="popSeat">-</span>
+            </div>
+          </div>
+          <div
+            id="popoverAccessible"
+            class="popover-accessible hidden"
+            aria-label="Accessible"
+          >
+            <svg
+              class="popover-wheelchair"
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              title="Accessibility"
+            >
+              <path
+                d="M9.48749 5.49397C10.4576 5.49397 11.2382 4.70536 11.2382 3.75541C11.2382 2.79133 10.4576 2.01685 9.48749 2.01685C8.5214 2.01685 7.73683 2.79133 7.73683 3.75541C7.73683 4.70536 8.5214 5.49397 9.48749 5.49397ZM19.7615 17.3876L16.7765 12.2707C16.591 11.9621 16.2663 11.7887 15.9295 11.7786H11.5488L11.5044 10.2397H14.685C15.1187 10.2135 15.4757 9.88676 15.4757 9.44506C15.4757 9.00941 15.1287 8.67057 14.685 8.65646H11.4156L11.3027 7.38985C11.2382 6.47821 10.4475 5.7602 9.51976 5.81062C8.58393 5.86306 7.87801 6.66175 7.92238 7.58549L8.23097 12.8617C8.30761 13.7874 9.08613 14.4429 10.0099 14.4429H15.6874L18.0069 18.4303C18.2852 18.8821 18.9286 19.0677 19.4126 18.7792C19.8906 18.4888 20.0338 17.8918 19.7615 17.3876ZM10.6129 20.4149C7.74086 20.4149 5.41135 18.1076 5.41135 15.2517C5.41135 13.6886 6.12533 12.2929 7.23664 11.343L7.13983 9.72944C5.28025 10.8831 4.03381 12.9101 4.03381 15.2517C4.03381 18.8579 6.97646 21.7844 10.6129 21.7844C13.2893 21.7844 15.5765 20.185 16.6051 17.91L15.6814 16.3166C15.1852 18.6502 13.1119 20.4149 10.6129 20.4149Z"
+                fill="currentColor"
+              />
+            </svg>
+            <span id="popoverAccessibleLabel">Accessible</span>
+          </div>
+        </div>
+        <div class="popover-arrow"></div>
+      </div>
+    </div>
+
+    <div id="root"></div>
+    <script src="%PUBLIC_URL%/app.js"></script>
+  </body>
+</html>
