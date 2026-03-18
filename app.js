@@ -1192,7 +1192,7 @@
     const routeProjects = [
       {
         slug: "/aggie-memorial-stadium",
-        projectFile: "aggie-stadium.svgqc",
+        projectFile: "aggie-stadium-1.svgqc",
       },
     ];
     const routePath =
