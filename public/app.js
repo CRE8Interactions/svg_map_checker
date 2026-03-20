@@ -1192,7 +1192,11 @@
     const routeProjects = [
       {
         slug: "/aggie-memorial-stadium",
-        projectFile: "aggie-stadium.svgqc",
+        projectFile: "aggie.svgqc",
+      },
+      {
+        slug: "/pan-american-center",
+        projectFile: "pan-american-center.svgqc",
       },
     ];
     const routePath =
