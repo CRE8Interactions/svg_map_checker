@@ -1204,7 +1204,7 @@
       },
       {
         slug: "/half-house-pan-american-center",
-        projectFile: "half-house-setup-pan-american-center.svgqc",
+        projectFile: "half-house-pan-american-center.svgqc",
       },
     ];
     const routePath =
