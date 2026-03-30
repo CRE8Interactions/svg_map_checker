@@ -1198,6 +1198,14 @@
         slug: "/pan-american-center",
         projectFile: "pan-american-center.svgqc",
       },
+      {
+        slug: "/180-pan-american-center",
+        projectFile: "180-setup-pan-american-center.svgqc",
+      },
+      {
+        slug: "/half-house-pan-american-center",
+        projectFile: "half-house-setup-pan-american-center.svgqc",
+      },
     ];
     const routePath =
       (window.location.pathname || "/").replace(/\/+$/, "").toLowerCase() ||
