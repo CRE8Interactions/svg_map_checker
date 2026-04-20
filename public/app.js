@@ -1206,6 +1206,14 @@
         slug: "/half-house-pan-american-center",
         projectFile: "half-house-pan-american-center.svgqc",
       },
+      {
+        slug: "/undergraduate-pan-american-center",
+        projectFile: "Undergraduate_Pan_American_Center.svgqc",
+      },
+      {
+        slug: "/wwe-pan-american-center",
+        projectFile: "WWE_Pan_American_Center.svgqc",
+      },
     ];
     const routePath =
       (window.location.pathname || "/").replace(/\/+$/, "").toLowerCase() ||
