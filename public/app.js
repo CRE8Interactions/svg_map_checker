@@ -1215,8 +1215,8 @@
         projectFile: "WWE_Pan_American_Center.svgqc",
       },
       {
-        slug: "/houston_bulls",
-        projectFile: "houston_bulls.svgqc",
+        slug: "/houston-bulls",
+        projectFile: "houston-bulls.svgqc",
       },
     ];
     const routePath =
