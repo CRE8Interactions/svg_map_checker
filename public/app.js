@@ -1214,6 +1214,10 @@
         slug: "/wwe-pan-american-center",
         projectFile: "WWE_Pan_American_Center.svgqc",
       },
+      {
+        slug: "/houston_bulls",
+        projectFile: "houston_bulls.svgqc",
+      },
     ];
     const routePath =
       (window.location.pathname || "/").replace(/\/+$/, "").toLowerCase() ||
