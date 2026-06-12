@@ -1203,6 +1203,10 @@
         projectFile: "pa-mexican-concert.svgqc",
       },
       {
+        slug: "/pan-american-mx-concert-wo-200",
+        projectFile: "pa-mexican-concert-wo-200.svgqc",
+      },
+      {
         slug: "/180-pan-american-center",
         projectFile: "180-setup-pan-american-center.svgqc",
       },
