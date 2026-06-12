@@ -1211,6 +1211,10 @@
         projectFile: "pa-mexican-concert.svgqc",
       },
       {
+        slug: "/pan-american-mx-concert-wo-200",
+        projectFile: "pa-mexican-concert-wo-200.svgqc",
+      },
+      {
         slug: "/undergraduate-pan-american-center",
         projectFile: "Undergraduate_Pan_American_Center.svgqc",
       },
