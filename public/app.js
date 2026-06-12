@@ -1207,6 +1207,10 @@
         projectFile: "half-house-pan-american-center.svgqc",
       },
       {
+        slug: "/pan-american-mx-concert",
+        projectFile: "pa-mexican-concert.svgqc",
+      },
+      {
         slug: "/undergraduate-pan-american-center",
         projectFile: "Undergraduate_Pan_American_Center.svgqc",
       },
