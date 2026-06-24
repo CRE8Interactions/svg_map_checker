@@ -434,14 +434,76 @@
 
   if (nzForm) nzForm.addEventListener("submit", handleNzSubmit);
 
+  function resolveArtboard(svgElement) {
+    const clipRect = svgElement.querySelector("clipPath rect");
+    if (clipRect) {
+      const w = parseFloat(clipRect.getAttribute("width") || "0");
+      const h = parseFloat(clipRect.getAttribute("height") || "0");
+      if (w > 0 && h > 0) {
+        return {
+          x: parseFloat(clipRect.getAttribute("x") || "0"),
+          y: parseFloat(clipRect.getAttribute("y") || "0"),
+          w,
+          h,
+        };
+      }
+    }
+
+    const previousViewBox = svgElement.getAttribute("viewBox");
+    const clippedElements = Array.from(
+      svgElement.querySelectorAll("[clip-path]"),
+    ).map((el) => ({
+      el,
+      clipPath: el.getAttribute("clip-path"),
+    }));
+
+    svgElement.setAttribute("viewBox", "0 0 10000 10000");
+    clippedElements.forEach(({ el }) => el.removeAttribute("clip-path"));
+
+    try {
+      const bbox = svgElement.getBBox();
+      const pad = 32;
+      if (bbox.width > 0 && bbox.height > 0) {
+        return {
+          x: bbox.x - pad,
+          y: bbox.y - pad,
+          w: bbox.width + pad * 2,
+          h: bbox.height + pad * 2,
+        };
+      }
+    } catch (_) {
+      /* fall through */
+    } finally {
+      clippedElements.forEach(({ el, clipPath }) => {
+        if (clipPath) el.setAttribute("clip-path", clipPath);
+      });
+      if (previousViewBox) svgElement.setAttribute("viewBox", previousViewBox);
+    }
+
+    if (previousViewBox) {
+      const [x, y, w, h] = previousViewBox.split(/\s+/).map(Number);
+      return { x, y, w, h };
+    }
+
+    return { x: 0, y: 0, w: 3000, h: 2250 };
+  }
+
   const exportProjectBtn = document.getElementById("exportProjectBtn");
   function exportProject() {
     if (!svgDoc || !svgWrapper) return;
+    const previousViewBox = svgDoc.getAttribute("viewBox");
+    const artboard = resolveArtboard(svgDoc);
+    svgDoc.setAttribute(
+      "viewBox",
+      `${artboard.x} ${artboard.y} ${artboard.w} ${artboard.h}`,
+    );
     const project = {
       version: 1,
       svg: svgWrapper.innerHTML,
       capacities: { ...seatData.sections },
     };
+    if (previousViewBox) svgDoc.setAttribute("viewBox", previousViewBox);
+    applyTransform();
     const blob = new Blob([JSON.stringify(project)], {
       type: "application/json",
     });
@@ -458,11 +520,7 @@
     svgWrapper.innerHTML = svgString;
     svgDoc = svgWrapper.querySelector("svg");
     if (!svgDoc) return;
-    const vbStr = svgDoc.getAttribute("viewBox");
-    if (vbStr) {
-      const [x, y, w, h] = vbStr.split(/\s+/).map(Number);
-      vb = { x, y, w, h };
-    }
+    vb = resolveArtboard(svgDoc);
     svgDoc.setAttribute("width", "100%");
     svgDoc.setAttribute("height", "100%");
 
