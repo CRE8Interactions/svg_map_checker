@@ -1284,6 +1284,10 @@
         slug: "/houston-bulls",
         projectFile: "houston-bulls.svgqc",
       },
+      {
+        slug: "/mma-no-tables-pan-american-center",
+        projectFile: "pan-am-mma-no-tables.svgqc",
+      },
     ];
     const routePath =
       (window.location.pathname || "/").replace(/\/+$/, "").toLowerCase() ||
