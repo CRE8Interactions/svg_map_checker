@@ -1242,6 +1242,10 @@
         slug: "/mens-basketball-pan-american-center",
         projectFile: "basketball.svgqc",
       },
+      {
+        slug: "/mens-basketball-ga-pan-american-center",
+        projectFile: "mens-bb-ga.svgqc",
+      },
     ];
     const routePath =
       (window.location.pathname || "/").replace(/\/+$/, "").toLowerCase() ||
