@@ -1230,6 +1230,18 @@
         slug: "/mma-no-tables-pan-american-center",
         projectFile: "pan-am-mma-no-tables.svgqc",
       },
+      {
+        slug: "/womens-basketball-pan-american-center",
+        projectFile: "w-bb.svgqc",
+      },
+      {
+        slug: "/womens-volleyball-pan-american-center",
+        projectFile: "vb.svgqc",
+      },
+      {
+        slug: "/mens-basketball-pan-american-center",
+        projectFile: "basketball.svgqc",
+      },
     ];
     const routePath =
       (window.location.pathname || "/").replace(/\/+$/, "").toLowerCase() ||
