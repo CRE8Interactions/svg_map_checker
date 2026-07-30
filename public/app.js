@@ -1244,7 +1244,11 @@
       },
       {
         slug: "/mens-basketball-ga-pan-american-center",
-        projectFile: "mens-bb-ga.svgqc",
+        projectFile: "ga-mens-basketball.svgqc",
+      },
+      {
+        slug: "/hairball",
+        projectFile: "hairball.svgqc",
       },
     ];
     const routePath =
