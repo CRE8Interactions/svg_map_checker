@@ -1224,7 +1224,7 @@
       },
       {
         slug: "/houston-bulls",
-        projectFile: "houston-bulls.svgqc",
+        projectFile: "HoustonBulls.svgqc",
       },
       {
         slug: "/mma-no-tables-pan-american-center",
