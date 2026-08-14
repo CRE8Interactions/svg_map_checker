@@ -1232,7 +1232,7 @@
       },
       {
         slug: "/womens-basketball-pan-american-center",
-        projectFile: "w-bb.svgqc",
+        projectFile: "pan-american-womens-basketball.svgqc",
       },
       {
         slug: "/womens-volleyball-pan-american-center",
@@ -1240,7 +1240,7 @@
       },
       {
         slug: "/mens-basketball-pan-american-center",
-        projectFile: "basketball.svgqc",
+        projectFile: "pan-american-mens-basketball-mf3.svgqc",
       },
       {
         slug: "/mens-basketball-ga-pan-american-center",
