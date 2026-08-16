@@ -1284,9 +1284,13 @@
         slug: "/houston-bulls",
         projectFile: "houston-bulls.svgqc",
       },
-      {
+        {
         slug: "/mma-no-tables-pan-american-center",
-        projectFile: "pan-am-mma-no-tables.svgqc",
+        projectFile: "mma-without-tables.svgqc",
+      },
+       {
+        slug: "/mma-with-tables-pan-american-center",
+        projectFile: "mma-with-tables.svgqc",
       },
       {
         slug: "/womens-basketball-pan-american-center",
