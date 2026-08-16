@@ -1294,7 +1294,7 @@
       },
       {
         slug: "/womens-basketball-pan-american-center",
-        projectFile: "pan-american-womens-basketball.svgqc",
+        projectFile: "w-bb.svgqc",
       },
       {
         slug: "/womens-volleyball-pan-american-center",
