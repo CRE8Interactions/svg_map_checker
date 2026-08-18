@@ -1312,6 +1312,10 @@
         slug: "/hairball",
         projectFile: "hairball.svgqc",
       },
+      {
+        slug: "/iowa-bulls",
+        projectFile: "iowa-bulls-seatmap.svgqc",
+      },
     ];
     const routePath =
       (window.location.pathname || "/").replace(/\/+$/, "").toLowerCase() ||
