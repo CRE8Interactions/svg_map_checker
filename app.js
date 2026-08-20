@@ -1253,6 +1253,10 @@
         projectFile: "aggie.svgqc",
       },
       {
+        slug: "/aggie-memorial-stadium-ga",
+        projectFile: "aggie-ga.svgqc",
+      },
+      {
         slug: "/pan-american-center",
         projectFile: "pan-american-center.svgqc",
       },
