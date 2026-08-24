@@ -1240,11 +1240,11 @@
       },
       {
         slug: "/womens-basketball-pan-american-center",
-        projectFile: "womens-bb-mf.svgqc",
+        projectFile: "womens-bb.svgqc",
       },
       {
         slug: "/womens-volleyball-pan-american-center",
-        projectFile: "womens-vb-mf.svgqc",
+        projectFile: "womens-vb.svgqc",
       },
       {
         slug: "/mens-basketball-pan-american-center",
