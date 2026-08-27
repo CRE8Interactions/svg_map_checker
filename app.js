@@ -1298,7 +1298,7 @@
       },
       {
         slug: "/womens-basketball-pan-american-center",
-        projectFile: "seatmap_2.svgqc",
+        projectFile: "seatmap_3.svgqc",
       },
       {
         slug: "/womens-volleyball-pan-american-center",
@@ -1322,7 +1322,7 @@
       },
       {
         slug: "/nmsu-baseball",
-        projectFile: "seatmap_3.svgqc",
+        projectFile: "seatmap_2.svgqc",
       },
     ];
     const routePath =
