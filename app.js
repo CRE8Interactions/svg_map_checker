@@ -1288,17 +1288,17 @@
         slug: "/houston-bulls",
         projectFile: "houston-bulls.svgqc",
       },
-        {
+      {
         slug: "/mma-no-tables-pan-american-center",
         projectFile: "mma-without-tables.svgqc",
       },
-       {
+      {
         slug: "/mma-with-tables-pan-american-center",
         projectFile: "mma-with-tables.svgqc",
       },
       {
         slug: "/womens-basketball-pan-american-center",
-        projectFile: "womens-bb.svgqc",
+        projectFile: "seatmap_2.svgqc",
       },
       {
         slug: "/womens-volleyball-pan-american-center",
@@ -1306,7 +1306,7 @@
       },
       {
         slug: "/mens-basketball-pan-american-center",
-        projectFile: "mens-bb-mf.svgqc",
+        projectFile: "seatmap_1.svgqc",
       },
       {
         slug: "/mens-basketball-ga-pan-american-center",
@@ -1319,6 +1319,10 @@
       {
         slug: "/iowa-bulls",
         projectFile: "iowa-bulls-seatmap.svgqc",
+      },
+      {
+        slug: "/nmsu-baseball",
+        projectFile: "seatmap_3.svgqc",
       },
     ];
     const routePath =
