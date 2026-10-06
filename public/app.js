@@ -1261,6 +1261,10 @@
       {
         slug: "/iowa-bulls",
         projectFile: "iowa-bulls-seatmap.svgqc",
+      }, 
+      {
+        slug: "/otters",
+        projectFile: "GA_ONLY_ICE_RINK.svgqc",
       },
       {
         slug: "/nmsu-baseball",

@@ -1324,6 +1324,10 @@
         slug: "/nmsu-baseball",
         projectFile: "seatmap_2.svgqc",
       },
+      {
+        slug: "/otters",
+        projectFile: "GA_ONLY_ICE_RINK.svgqc",
+      },
     ];
     const routePath =
       (window.location.pathname || "/").replace(/\/+$/, "").toLowerCase() ||
